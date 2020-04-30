@@ -1,0 +1,37 @@
+{
+	"ADCP":{
+		"1":{
+			"Device":1,
+			"Async":1,
+			"Uart":{
+				"Bus":6,
+				"Baudrate":9600,
+				"Bits":8,
+				"Parity":"None",
+				"Stop":1,
+				"Timeout":10,
+				"Timeout_Char":10,
+				"Flow_Control":0,
+				"Read_Buf_Len":1024,
+				"Write_Buf_Len":1024,
+				"Read_Char_Attempt":10
+			},
+			"Ctrl_Pin":"Y3",
+			"Activation_Rate":0,
+			"Warmup_Duration":0,
+			"Samples":10,
+			"Activation_Delay":0,
+			"Sample_Rate":1,
+			"Data_Format":"",
+			"String_To_Acquire":"",
+			"Data_Separator":" ",
+			"Status":1,
+			"String_Label":"$ADCP",
+			"Timeout":10,
+			"Adcp":{
+				"Deployment_Config":"config/adcp.pdc",
+				"Start_Delay":60
+			}
+		}
+	}
+}

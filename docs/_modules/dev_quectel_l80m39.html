@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dev_quectel_l80m39 &mdash; BuoyController 2.0 dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BuoyController
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0 dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware/index.html">Firmware Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hardware/index.html">Hardware Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BuoyController</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>dev_quectel_l80m39</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dev_quectel_l80m39</h1><div class="highlight"><pre>
+<span></span><span class="c1"># The MIT License (MIT)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 OGS</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="kn">import</span> <span class="nn">pyb</span>
+<span class="kn">import</span> <span class="nn">utime</span>
+<span class="kn">import</span> <span class="nn">tools.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">constants</span>
+<span class="kn">from</span> <span class="nn">device</span> <span class="k">import</span> <span class="n">DEVICE</span>
+<span class="kn">from</span> <span class="nn">tools.nmea</span> <span class="k">import</span> <span class="n">NMEA</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan2</span><span class="p">,</span> <span class="n">radians</span>
+
+<div class="viewcode-block" id="GPS"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS">[docs]</a><span class="k">class</span> <span class="nc">GPS</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">,</span> <span class="n">NMEA</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a GPS object.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">constants</span><span class="o">.</span><span class="n">CONFIG_TYPE</span>
+        <span class="n">DEVICE</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">NMEA</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">data_tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;last_fix&quot;</span><span class="p">,</span><span class="s2">&quot;sync_rtc&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;tasks&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">elem</span> <span class="ow">in</span> <span class="n">data_tasks</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;tasks&quot;</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;tasks&quot;</span><span class="p">]:</span>
+                        <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;self.&quot;</span> <span class="o">+</span> <span class="n">task</span> <span class="o">+</span> <span class="s2">&quot;()&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;self&quot;</span><span class="p">:</span><span class="bp">self</span><span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;tasks&quot;</span><span class="p">]:</span>
+                    <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;self.&quot;</span> <span class="o">+</span> <span class="n">task</span> <span class="o">+</span> <span class="s2">&quot;()&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;self&quot;</span><span class="p">:</span><span class="bp">self</span><span class="p">})</span>
+
+<div class="viewcode-block" id="GPS.start_up"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS.start_up">[docs]</a>    <span class="k">def</span> <span class="nf">start_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs device specific initialization sequence.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_power</span><span class="p">():</span>
+          <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="GPS.main"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read nmea messages and search for RMC valid strings.&quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; acquiring data...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;READY&quot;</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; timeout occourred&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># DEBUG</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uart</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sentence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uart</span><span class="o">.</span><span class="n">readchar</span><span class="p">(),</span> <span class="s2">&quot;RMC&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
+                        <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; invalid data received&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># DEBUG</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="GPS.log"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes out acquired data to file.&quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">log_data</span><span class="p">(</span><span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">)))</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="GPS.sync_rtc"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS.sync_rtc">[docs]</a>    <span class="k">def</span> <span class="nf">sync_rtc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Synchronizes rtc with gps data.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_valid_gprmc</span><span class="p">():</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; syncyng rtc...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+            <span class="n">utc_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">utc_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+            <span class="n">rtc</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">RTC</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rtc</span><span class="o">.</span><span class="n">datetime</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;20&quot;</span><span class="o">+</span><span class="n">utc_date</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">utc_date</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">utc_date</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">utc_time</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">utc_time</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">utc_time</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">utc_time</span><span class="p">[</span><span class="mi">6</span><span class="p">:])))</span>  <span class="c1"># rtc.datetime(yyyy, mm, dd, 0, hh, ii, ss, sss)</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; rtc successfully synchronized (UTC: </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">time_string</span><span class="p">(</span><span class="n">utime</span><span class="o">.</span><span class="n">time</span><span class="p">())),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; unable to synchronize rtc&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">time_string</span><span class="p">(</span><span class="n">utime</span><span class="o">.</span><span class="n">time</span><span class="p">())),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="GPS.last_fix"><a class="viewcode-back" href="../index.html#dev_quectel_l80m39.GPS.last_fix">[docs]</a>    <span class="k">def</span> <span class="nf">last_fix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stores last gps valid position and utc.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_valid_gprmc</span><span class="p">():</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; saving last gps fix...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+            <span class="n">utc_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">utc_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+            <span class="n">lat</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">lon</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+            <span class="n">utc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;20&quot;</span><span class="o">+</span><span class="n">utc_date</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="n">utc_date</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">utc_date</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">utc_time</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">utc_time</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">utc_time</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
+            <span class="n">speed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">heading</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">gps</span> <span class="o">=</span> <span class="p">(</span><span class="n">utc</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">heading</span><span class="p">)</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">log_file</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> =&gt; last fix (UTC: </span><span class="si">{}</span><span class="s2"> POSITION: </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">, SPEED: </span><span class="si">{}</span><span class="s2">, HEADING: </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">utc</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">heading</span><span class="p">),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>  <span class="c1"># DEBUG</span>
+        <span class="k">return</span></div>
+
+    <span class="k">def</span> <span class="nf">displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># approximate radius of earth in km</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="mf">6373.0</span>
+        <span class="n">lat1</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">gps</span><span class="p">())</span>
+        <span class="n">lon1</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">21.0122287</span><span class="p">)</span>
+        <span class="n">lat2</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">52.406374</span><span class="p">)</span>
+        <span class="n">lon2</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">16.9251681</span><span class="p">)</span>
+
+        <span class="n">dlon</span> <span class="o">=</span> <span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span>
+        <span class="n">dlat</span> <span class="o">=</span> <span class="n">lat2</span> <span class="o">-</span> <span class="n">lat1</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlat</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">atan2</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">))</span>
+
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">c</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result:&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Should be:&quot;</span><span class="p">,</span> <span class="mf">278.546</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019-2020, Andrea Corbo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+	"GPS":{
+		"1":{
+				"Device":1,
+				"Async":1,
+				"Uart":{
+					"Bus":2,
+					"Baudrate":9600,
+					"Bits":8,
+					"Parity":"None",
+					"Stop":1,
+					"Timeout":10,
+					"Timeout_Char":10,
+					"Flow_Control":0,
+					"Read_Buf_Len":512,
+					"Write_Buf_Len":0,
+					"Read_Char_Attempt":10
+				},
+				"Ctrl_Pin":"Y7",
+				"Activation_Rate":60,
+				"Warmup_Duration":58,
+				"Samples":8,
+				"Activation_Delay":0,
+				"Sample_Rate":4,
+				"Data_Format":"NMEA",
+				"Data_Separator":" ",
+				"Status":0,
+				"String_Label":"$GPRMC",
+				"Gps":{
+					"String_To_Acquire":"GPRMC",
+					"Last_Fix":"",
+					"Last_Position":""
+				}
+			}
+		}
+	}
